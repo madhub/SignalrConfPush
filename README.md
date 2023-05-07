@@ -1,6 +1,10 @@
 # Overview
 A signalr based app & client to demonstrate the pushing notification , commands to clients behind private network.
 
+
+![image](https://user-images.githubusercontent.com/8907962/236670654-46cb60f2-fd2b-4259-ad2c-7d8f530f78e0.png)
+
+
 ## Client Application
 .NET SignalR client , that subscribe to notification & commands from SignalR service. It also implements logic to **increase/decrease** the logging level based on the command from server without **restarting** the application
 A persistant bidirectional connection (Websocket) created to signalr service and receives commands & notfication. A background service receives commands and acts on it.
