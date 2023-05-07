@@ -1,0 +1,38 @@
+﻿//using Microsoft.AspNetCore.SignalR.Client;
+//using Utils;
+//const int WaitIndefinitely = -1;
+
+//using var cts = new CancellationTokenSource();
+
+//// register for key press to stop the application
+//Console.CancelKeyPress += (sender, e) =>
+//{
+//    e.Cancel = true;
+//    cts.Cancel();
+//};
+
+//await using var connection = new HubConnectionBuilder()
+//               .WithUrl("http://localhost:5189/notify")
+//               .WithAutomaticReconnect()
+//               .Build();
+
+//connection.On<string>("ReceiveMessage", (message) =>
+//{
+//    LogHelper.Log($"Received-Message From server '{message}'", ConsoleColor.Green);
+//});
+
+//await connection.StartAsync();
+
+//LogHelper.Log($"Joining group 'configchange'", ConsoleColor.Yellow);
+//await connection.InvokeAsync("JoinGroup", "configchange");
+
+//try
+//{
+//    LogHelper.Log($"Waiting for keypress...", ConsoleColor.Yellow);
+//    await Task.Delay(WaitIndefinitely, cts.Token);
+//    await connection.InvokeAsync("LeaveGroup", "configchange");
+//}
+//catch (OperationCanceledException exp)
+//{
+//    LogHelper.Log($"Done ", ConsoleColor.Red);
+//}
