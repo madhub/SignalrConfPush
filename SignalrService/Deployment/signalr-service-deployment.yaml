@@ -1,0 +1,73 @@
+﻿apiVersion: v1
+kind: List
+items:
+- apiVersion: v1
+  kind: Namespace
+  metadata:
+    name: demos
+
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: signalrservice-deployment
+    namespace: demos
+    labels:
+      app: signalrservice
+  spec:
+    replicas: 2
+    selector:
+      matchLabels:
+        app: signalrservice
+    template:
+      metadata:
+        namespace: demos
+        labels:
+          app: signalrservice
+      spec:
+        containers:
+        - name: signalrservice
+          image:  demos/signalrservice:1.0
+          ports:
+          - containerPort: 80
+          imagePullPolicy: Never
+          resources:
+            requests:
+              memory: "512M"
+              cpu: "0.5"
+            limits:
+              memory: "1G"
+              cpu: "1"
+# service
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: signalr-service
+    namespace: demos
+  spec:
+    selector:
+      app: signalrservice
+    ports:
+      - name: http
+        port: 80 
+        targetPort: 80
+        protocol: TCP
+# Ingress
+- apiVersion: networking.k8s.io/v1
+  kind: Ingress
+  metadata:
+    name: signalr-ingress
+    namespace: demos
+  spec:
+   ingressClassName: nginx
+   rules:
+    - host: kubernetes.docker.internal
+      http:
+       paths:
+        - path: /
+          pathType: Prefix
+          backend:
+           service: 
+             name: signalr-service
+             port:
+              number : 80
+        

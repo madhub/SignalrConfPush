@@ -1,17 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using SignalrService.Model;
 using Utils;
 
 namespace SignalrService.Controllers
 {
-    public record MessageData(string groupName, string message);
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="groupName"></param>
-    /// <param name="logLevel"> Allowed values are , Information,Warning,Trace,Debug,Error,Critical</param>
-    /// <param name="logCategory">Log category.Ex: SignalRClient.Worker</param>
-    public record LogData(string groupName, string logLevel,string logCategory);
 
 
     /// <summary>
@@ -27,22 +20,31 @@ namespace SignalrService.Controllers
         {
             this.notificationHub = notificationHub;
         }
+        /// <summary>
+        /// Send message to connected clients to with message provided in the payload
+        /// </summary>
+        /// <param name="messageData"> message payload</param>
+        /// <returns></returns>
         [HttpPost]
         [Route("notify")]
-        public async Task<ActionResult> Notify([FromBody] MessageData payload)
+        public async Task<ActionResult> Notify([FromBody] MessageData messageData)
         {
-            LogHelper.Log($"Notifying all members of  group '{payload.groupName}' with message '{payload.message}'", ConsoleColor.Yellow);
-            await notificationHub.Clients.Groups(payload.groupName).SendAsync("ReceiveMessage",payload.message);
+            LogHelper.Log($"Notifying all members of  group '{messageData.groupName}' with message '{messageData.message}'", ConsoleColor.Yellow);
+            await notificationHub.Clients.Groups(messageData.groupName).SendAsync("ReceiveMessage",messageData.message);
             return Ok();
         }
 
+        /// <summary>
+        /// Send message to connected clients to changes log level 
+        /// </summary>
+        /// <param name="logData">LogData data model</param>
+        /// <returns></returns>
         [HttpPost]
-        [Route("changingloglevel")]
-        public async Task<ActionResult> Changingloglevel([FromBody] LogData payload)
+        [Route("changloglevel")]
+        public async Task<ActionResult> Changloglevel([FromBody] LogData logData)
         {
-            //LogHelper.Log($"Notifying all members of  group '{payload.groupName}' with message '{payload.message}'", ConsoleColor.Yellow);
-            var logMsg = $"{payload.logLevel}|{payload.logCategory}";
-            await notificationHub.Clients.Groups(payload.groupName).SendAsync("ChangeLogLevel", logMsg);
+            var logMsg = $"{logData.logLevel}|{logData.logCategory}";
+            await notificationHub.Clients.Groups(logData.groupName).SendAsync("ChangeLogLevel", logMsg);
             return Ok();
         }
 
