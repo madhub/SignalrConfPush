@@ -36,6 +36,8 @@ curl -X 'POST' \
   "logCategory": "SignalRClient"
 }'
 ```
+### Running Service in Kubernetes
+[Running Service in Kubernetes](SignalrService/readme.md)
 
 
 
