@@ -27,7 +27,7 @@ curl -X 'POST' \
 - API to command to increase/decrease logging level of connected clients
 ```shell
 curl -X 'POST' \
-  'http://localhost:5189/Notify/changingloglevel' \
+  'http://localhost:5189/Notify/changloglevel' \
   -H 'accept: */*' \
   -H 'Content-Type: application/json' \
   -d '{
