@@ -4,7 +4,7 @@ to notify & send commands to connected clients.
 ## Overview
 A ASP.NET Core server application that uses Signalr feature enable connected client to receive notification & commands
 
-### Building Docker images
+### Building Docker image
 Make sure Docker is installed on your system.
 - Change to **SignalrService** project directory
 	```shell
@@ -24,4 +24,4 @@ Make sure to have Kubernetes with [nginx ingress](https://kubernetes.github.io/i
 	```shell
 		kubectl apply -f signalr-service-deployment.yaml	
 	```
-- Point your Web Browser to http://kubernetes.docker.internal/swagger to see the API documentation 
+- Point your Web Browser to http://kubernetes.docker.internal/swagger to see the REST API documentation 
