@@ -14,7 +14,7 @@ namespace SignalRClient
     public class Worker : BackgroundService
     {
         private readonly HubConnection hubConnection;
-        private readonly PeriodicTimer timer = new PeriodicTimer(TimeSpan.FromSeconds(10));
+        private readonly PeriodicTimer timer = new PeriodicTimer(TimeSpan.FromSeconds(5));
         private readonly ILogger<Worker> logger;
         private readonly ConfigurationHelper configurationHelper;
 
